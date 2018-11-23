@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import java.lang.reflect.*;
 import java.lang.annotation.ElementType;
@@ -104,7 +105,7 @@ class Validator {
                     }
 	       		}
 	       		else if(field.isAnnotationPresent(NotEmpty.class)){
-	       			if(((List)field.get(object)).size() == 0){
+	       			if(((Collection)field.get(object)).size() == 0){
                  		  return false;
  					 }
 	       		}
