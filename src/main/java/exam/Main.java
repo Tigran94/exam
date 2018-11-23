@@ -97,11 +97,11 @@ class Validator {
 			 for (Field field: fields) {
 	            field.setAccessible(true);
 
+                Object tempObj = field.get(object);
 	        	if(field.isAnnotationPresent(NotNull.class)){
-	        		String value = (String) field.get(object);
-	        		if(value.equals(null)){
-	        			return false;
-	        		}
+	        		if(tempObj == null){
+                            return false;
+                    }
 	       		}
 	       		else if(field.isAnnotationPresent(NotEmpty.class)){
 	       			if(((List)field.get(object)).size() == 0){
@@ -118,7 +118,8 @@ class Validator {
 					 	return false;
 	       		}
 	       	}
-        }catch(IllegalAccessException e){
+        }
+        catch(IllegalAccessException e){
 
         }
         return true;           
