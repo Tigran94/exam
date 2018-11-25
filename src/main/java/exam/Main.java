@@ -115,7 +115,7 @@ class Validator {
 	       			 float min = anno.minValue();
 					 float max = anno.maxValue();
 					 Float value = (Float)field.get(object);
-					 if(value<min && value>max)
+					 if(value<min || value>max)
 					 	return false;
 	       		}
 	       	}
