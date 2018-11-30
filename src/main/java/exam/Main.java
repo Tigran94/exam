@@ -15,8 +15,8 @@ public class Main {
         Course c2 = new Course("Introduction to programming", "CS102");
 
         Student student = new Student("John", "Smith", 3.8f);
-        // student.enroll(c1);
-        // student.enroll(c2);
+        student.enroll(c1);
+        student.enroll(c2);
 
         Validator validator = new Validator();
         if(!validator.isValid(student)) {
@@ -65,7 +65,12 @@ class Student {
     }
 
     void enroll(Course course) {
-        courses.add(course);
+        try{
+             courses.add(course);
+        }catch(NullPointerException e){
+            System.out.println("Collection is null");
+            System.exit(1);
+        }
     }
 
 }
@@ -105,9 +110,16 @@ class Validator {
                     }
 	       		}
 	       		else if(field.isAnnotationPresent(NotEmpty.class)){
-	       			if(((Collection)field.get(object)).size() == 0){
-                 		  return false;
- 					 }
+                    Object obj = field.get(object);
+                    
+                    if(obj instanceof Collection){
+                        if(((Collection)field.get(object)).size() == 0){
+                            return false;
+                        }
+                    } 
+
+                    
+	       			
 	       		}
 	       		else if(field.isAnnotationPresent(Valid.class)){
 	       			 Valid anno = field.getAnnotation(Valid.class);
