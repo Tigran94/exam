@@ -15,8 +15,8 @@ public class Main {
         Course c2 = new Course("Introduction to programming", "CS102");
 
         Student student = new Student("John", "Smith", 3.8f);
-        student.enroll(c1);
-        student.enroll(c2);
+        // student.enroll(c1);
+        // student.enroll(c2);
 
         Validator validator = new Validator();
         if(!validator.isValid(student)) {
