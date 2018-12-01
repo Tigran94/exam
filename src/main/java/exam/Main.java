@@ -14,7 +14,7 @@ public class Main {
         Course c1 = new Course("Databases", "CS101");
         Course c2 = new Course("Introduction to programming", "CS102");
 
-        Student student = new Student("John", "Smith", 3.8f);
+        Student student = new Student("John", "123", 3.8f);
         student.enroll(c1);
         student.enroll(c2);
 
@@ -105,30 +105,29 @@ class Validator {
 
                 Object tempObj = field.get(object);
 	        	if(field.isAnnotationPresent(NotNull.class)){
-	        		if(tempObj == null){
+
+                    if(tempObj instanceof String){
+                        if(tempObj == null){
                             return false;
-                    }
+                        }
+                    }else return false;    
 	       		}
 	       		else if(field.isAnnotationPresent(NotEmpty.class)){
-                    Object obj = field.get(object);
-                    
-                    if(obj instanceof Collection){
+                    if(tempObj instanceof Collection){
                         if(((Collection)field.get(object)).size() == 0){
                             return false;
                         }
-                    } 
-
-                    
-	       			
+                    } 	
 	       		}
 	       		else if(field.isAnnotationPresent(Valid.class)){
-	       			 Valid anno = field.getAnnotation(Valid.class);
-	       			 
-	       			 float min = anno.minValue();
-					 float max = anno.maxValue();
-					 Float value = (Float)field.get(object);
-					 if(value<min || value>max)
-					 	return false;
+                    if(tempObj instanceof Float){
+                         Valid anno = field.getAnnotation(Valid.class);
+                         float min = anno.minValue();
+                         float max = anno.maxValue();
+                         Float value = (Float)field.get(object);
+                         if(value<min || value>max)
+                            return false;
+                    }else return false;
 	       		}
 	       	}
         }
